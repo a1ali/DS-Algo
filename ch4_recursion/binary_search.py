@@ -17,5 +17,5 @@ def binary_search(data, target, low, high):
         
 x = [1,2,3,4,5,6,7,8,9,10,11,12,13]
 
-y = binary_search(x, 21,1,13)
+y = binary_search(x, 21,0,len(x) - 1)
 print(y)
