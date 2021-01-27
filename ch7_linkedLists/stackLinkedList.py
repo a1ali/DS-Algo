@@ -47,9 +47,9 @@ class LinkedStack:
     
     def push(self, e):
         '''push an element to the top of the stack.'''
-         self._head = _Node(e, self._head) #create and link a new node
+        self._head =  self._Node(e, self._head) #create and link a new node
          #the _next field of the new node is set to the existing top node and then self._head is reassigned
-         self._size += 1 #increase the size of elements in the stack
+        self._size += 1 #increase the size of elements in the stack
 
     def top(self):
         '''return the current head element but do not remove it
@@ -68,3 +68,20 @@ class LinkedStack:
         self._head = self._head._next #replace the old head with its next 
         self._size -= 1  #decrease stack size
         return element #return the old element 
+    
+    def printList(self):
+        '''traversing through the linked list'''
+        temp = self._head 
+        for _ in range(0,self._size):
+            print(temp._element)
+            temp = temp._next 
+    
+x = LinkedStack()
+
+x.push(2)
+x.push(3)
+x.push(1)
+print(x.top())
+x.printList()
+x.pop()
+x.printList()
