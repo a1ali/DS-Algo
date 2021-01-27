@@ -2,6 +2,7 @@
 '''
 
 Last-In-First-Out (LIFO) based stack that used python lists 
+the top of the stack will be the last element in the list _data[-1]
 
 '''
 

@@ -1,0 +1,25 @@
+
+Add and element to the head
+Algorithm add_first(L,e):
+    newest = Node(e) #create a new node and have it refer element e 
+    newest.next = L.head #set the next element of new node to be the old head 
+    L.head = newest #make the new head be the new node
+    L.size += 1 #increase size of the linkedlist 
+
+Add an element to the tail
+Algorithm add_last(L,e):
+    newest = Node(e) #create a new node and have it refer element e 
+    L.tail.next = newest #set the old tail to be the new node
+    L.tail = newest #make the tail be the new node 
+    L.size += 1 #increase the size of the linkedlist
+
+remove a head node 
+Algorithm remove-first(L):
+    if L.head is None then 
+        raise an error "linked list is empty"
+    L.head = L.head.next #make the next element of the old head be the new head
+    L.size -= 1 #decrement the size of the linked list 
+
+not so easy to remove a tail because we would need a reference to the 
+element that is before the tail, we would have to traverse from the head 
+unless we had a doubly linked list 
