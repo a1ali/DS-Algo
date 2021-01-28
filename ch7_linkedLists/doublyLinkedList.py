@@ -20,7 +20,6 @@ class _DoublyLinkedBase:
         '''
         self._size = 0
 
-    
     def __len__(self):
         return self._size 
     
@@ -46,6 +45,9 @@ class _DoublyLinkedBase:
         element = node._element #store the deteling node's element 
         node._prev = node._next = node._element = None #deprecate node 
         return element
+
+
+
 
 class LinkedDeque(_DoublyLinkedBase):
     #using inheritance 
@@ -77,6 +79,13 @@ class LinkedDeque(_DoublyLinkedBase):
         if self.is_empty():
             raise Empty('list is empty')
         return _delete_node(self._header._next)
+
+    def delete_last(self):
+        '''remove and return the element from the last of the dequeu.
+        raise an exception if the dequeue is empty.'''
+        if self.is_empty():
+            raise Empty('list is empty')
+        return _delete_node(self._trailer._prev)
 
     
 

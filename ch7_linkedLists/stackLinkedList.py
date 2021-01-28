@@ -75,6 +75,20 @@ class LinkedStack:
         for _ in range(0,self._size):
             print(temp._element)
             temp = temp._next 
+
+    def reverse(self):
+        '''return a reversed linked list of the original '''
+        dum = LinkedStack()
+        l = []
+        temp = self._head
+        for _ in range(self._size):
+            l.append(temp._element)
+            temp = temp._next
+        #l = l[::-1]
+        for i in l:
+            dum.push(i)
+
+        return dum  
     
 x = LinkedStack()
 
