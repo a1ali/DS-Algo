@@ -89,6 +89,110 @@ class LinkedDeque(_DoublyLinkedBase):
 
     
 
+class PositionalList(_DoublyLinkedBase):
+    '''A sequential container of elements allowing positional access'''
 
+    #nestedd Position class 
+    class Position:
+        '''An abstraction representing the location of a single element.'''
 
+        def __init__(self, container, node):
+            '''constructor should not be invoked by user.'''
+
+            self._container = container
+            self._node = node 
+
+        def element(self):
+            '''return the element stores at this position'''
+            return self._node._element
+
+        def __eq__(self, other):
+            '''return true if other is a position representing the same location'''
+            return type(other) is type(self) and other._node is self._node 
+
+        def __ne__(self, other):
+            '''return true if other does not represent the same location.'''
+            return (self == other) #opposite of __eq__
+
+    #utility method
+    def _validate(self, p):
+        '''return position node, or raise appropriate error if invalid'''
+        if not isinstance(p, self._Position):
+            raise TypeError('p must be proper Position type')
+        if p._container is not self:
+            raise ValueError('p does not belong to this container')
+        if p._node._next is None:
+            raise ValueError('p is no longer valid')
+        return p._node 
+
+    def _make_position(self, node):
+        '''return position instance for given node (or None if sentianl).'''
+        if node is self._header or node is self._trailer:
+            return None 
+        else:
+            return self.Position(self, node)
+
+    #accessors
+    def first(self):
+        '''return the first position in the liost or none if list is empty'''
+        return self._make_position(self._header._next)
     
+    def last(self):
+        '''return the last postion in the ;list of none if empty'''
+        return self._make_position(self._trailer._prev)
+    
+    def before(self, p):
+        '''return the position just before position p or none if p is first'''
+        node = self._validate(p)
+        return self._make_position(node._prev)
+
+    def after(self, p):
+        '''return the position just after position p or none if p is last.'''
+        node = self._validate(p)
+        return self._make_position(node._next)
+    
+    def __iter__(self):
+        '''generate a forward iteration of the elements of the list.'''
+        cursor = self.first()
+        while cursor is not None:
+            yield cursor.element()
+            cursor = self.after(cursor)
+
+    #------------------------------- mutators -------------------------------
+    # override inherited version to return Position, rather than Node
+    def _insert_between(self, e, predecessor, successor):
+        '''Add element between existing nodes and return new Position.'''
+        node = super(). insert_between(e, predecessor, successor)
+        return self._make_position(node)   
+
+    def add_first(self, e):
+        '''Insert element e at the front of the list and return new Position.'''
+        return self._insert_between(e, self. header, self. header. next)  
+
+    def add_last(self, e):
+        '''Insert element e at the back of the list and return new Position.'''
+        return self._insert_between(e, self. trailer. prev, self. trailer)  
+
+    def add_before(self, p, e):
+        '''Insert element e into list before Position p and return new Position.'''
+        original = self._validate(p)
+        return self._insert_between(e, original. prev, original)    
+
+    def add_after(self, p, e):
+        '''Insert element e into list after Position p and return new Position.'''
+        original = self._validate(p)
+        return self._insert_between(e, original, original. next) 
+
+    def delete(self, p):
+        '''Remove and return the element at Position p.'''
+        original = self._validate(p)
+        return self._delete_node(original) # inherited method returns element   
+
+    def replace(self, p, e):
+        '''Replace the element at Position p with e.
+         Return the element formerly at Position p.
+         '''
+        original = self._validate(p)
+        old_value = original._element # temporarily store old element
+        original.element = e # replace with new element
+        return old_value # return the old element value    
