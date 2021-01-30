@@ -1,0 +1,34 @@
+---preorder traversal of tree T the root of T is visited first and then the subtrees 
+rooted at its children are traversed recursively. if the tree is ordered then the 
+subtrees are traversed according to the order of the children.  
+
+Algorithm preorder(T, p):
+    perform the visit action for position p 
+    for each child c in T.children(p) do 
+        preorder(T, c) #recursively travverse the subtree rooted at c 
+
+---postorder traversal is the opposite of the preorder traversal,  it recursively
+travverses the subtrees rooted at the children of the root first and then visits 
+the root 
+
+Algorithm postorder(T, p):
+    for each child c in T.children(p) do 
+        postorder(T, c) #recursively traverse the subtree rooted at c 
+    perform the visit action for position p 
+
+---breadth first tree traversal is an approach to traverse a tree so that we visit all the positions 
+at depth d before we visit the positions at depth d+1. Are used in software to play games. A game tree
+represents the possible choices of moves that might be made by a player or computer during a game 
+with the root of the tree being the initial game condition. the process is not recursive 
+since we are not traversing entire subtrees at once. use a queue to produce a fifo semnatics for the order 
+in which we visit the nodes 
+
+Algorithm breadthfirst(T):
+    Initialize queue Q to contain T.root()
+    while Q not empty do   
+        p = Q.dequeue() #p is the oldest entry in the queue 
+        perform the visit actio for position p 
+        for each child c in T.children(p) do 
+            Q.enqueue(c) #add p's children to the end of the queue for later visits 
+
+
