@@ -50,3 +50,18 @@ tree T such that for each position p of T:
     elements stores in the left subtree of p if any are less than e(p)
     elements stored in the right subtree of p if any are greater than e(p)
 can also be views as descision trees 
+
+
+---Euler tour traversal of a general tree T can be informally defined as a walk around T, where 
+we start by going from the root toward its leftmost child viewing the edges of T as being walls 
+that we always keep to our left. A previsit occurs when the first reaching the position that is when 
+the walk passes immediatly left of the node. A post visit occurs when the walk later proceeds upwards from
+that position that is when the walk passes to the right of the node. Can be viewed recursively in between 
+the pre visit and post visit of a given position will be a recursive tour of each of its subtrees 
+
+Algorithm eulertour(T, p):
+    perform the pre visit action for positon p 
+    for each child c in T.children(p) do 
+        eulertour(T, c) #recursively tour the subtree rooted at c 
+    perform the post visit action for position p 
+    
