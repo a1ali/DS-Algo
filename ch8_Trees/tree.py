@@ -53,6 +53,73 @@ class Tree:
         '''return true if the tree is empty'''
         return len(self) == 0
 
+    def __iter__(self):
+        '''generate an iteration of the tree's elements.'''
+        for p in self.positions():
+            yield p.element()
+    
+    #------------------------Traversal Implementations-------------------------
+
+    '''preorder traversal
+    we must parameterize a specific position within the tree that serves
+    as the root of a subtree to traverse both of the functions will be generators 
+    yield position to the caller and let the caller decide what action to perform'''
+    
+    def preorder(self):
+        '''generate a preorder iteration of positions in the tree.'''
+        if not self.is_empty():
+            for p in self._subtree_preorder(self.root()):
+                yield p 
+    
+    def _subtree_preorder(self, p):
+        '''generate a preorder iteration of positions in the subtree rooted at p'''
+        yield p #visit p before its subtree 
+        for c in self.children(p): #for each child c 
+            for other in self._subtree_preorder(c): #do preorder of c' subtree
+                yield other #yielding each to our caller 
+
+    def positions(self):
+        '''generate an iteration of the tree's position'''
+        return self.preorder() #return entire preorder iteration 
+
+    '''postorder traversal implementation is very simiar to preorder however in 
+    this we change the recursive utility to yeild the position of p after we have 
+    recursively yield the position of its subtrees. In postorder the children come first'''
+
+    def postorder(self):
+        '''generate a postorder iteration of positions in the tree.'''
+        if not self.is_empty():
+            for p in self._subtree_postorder(self.root()):
+                yield p 
+    
+    def _subtree_postorder(self, p):
+        '''generate a postorder iteration of positions in subtree rooted at p.'''
+        for c in self.children(p): #for each child c 
+            for other in self._subtree_postorder(c): #do postorder of c' subtree
+                yield other #yeild each to our caller 
+        yield p #visit p after its subtree 
+
+    ''' breadth first traversal algorithm is not recursive it relies on the queue of positions to manage
+    the traversal process. we can use the linkedqueue class from chapter 7. Breadthfirst goes one depth
+    at a time. using a queing mechanism we can place the children into queus before putting the children's
+    children into the queue also '''
+
+    def breadthfirst(self):
+        '''generate a breadth first iteration of the positions of the tree'''
+        if not self.is_empty():
+            fringe = LinkedQueue() #known position not yet yielded 
+            fringe.enqueue(self.root()) #starting with the root 
+            while not fringe.is_empty():
+                p = fringe.dequeue() #remove from front of the queue
+                yield p #report this position
+                for c in self.children(p):
+                    fringe.enqueue(c) # add children to the back of the queue 
+
+    '''inorder travesal will be implemented in the binary tree class'''
+
+
+
+
 '''
 binary tree has at most two children left and right 
 bianrytree class will inherit from the tree class above
@@ -91,6 +158,34 @@ class BinaryTree(Tree):
             yield self.left(p)
         if self.right(p) is not None: #get right child if it exits 
             yield self.right(p)
+
+    #-----------------------travesal-------------------------------
+    '''Inorder traversal relies on the notion of a left and right child of a node 
+    only applies to binary trees '''
+
+    def inorder(self):
+        '''generate an inorder iteration of positions in the tree'''
+        if not self.is_empty():
+            for p in self._subtree_inorder(self.root()):
+                yield p 
+    
+    def _subtree_inorder(self, p):
+        '''generate an inorder iteration of positions in subtree rooted at p'''
+        if self.left(p) is not None: #if left child exists traverse its subtree
+            for other in self._subtree_inorder(self.left(p)):
+                yield other 
+        yield p #visit p between its subtrees 
+        if self.right(p) is not None: #if the right child exists traverse its subtree
+            for other in self._subtree_inorder(self.right(p)):
+                yield other 
+
+    '''inorder traversal provides an natural way to traverse a binary tree 
+    we can overide the inherited positions() function to make inorder the default'''
+    def positions(self):
+        '''generate an iteration of tree's positions'''
+        return self.inorder() #make inorder the default 
+
+
 
 
 '''

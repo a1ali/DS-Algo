@@ -32,3 +32,21 @@ Algorithm breadthfirst(T):
             Q.enqueue(c) #add p's children to the end of the queue for later visits 
 
 
+--- inorder traversal is an traversal Algorithm in which we recursivly traverse of its left and right subtrees
+can be viewed as visiting the from the left node to the right node. for every position p the inorder traversal 
+visits p after all the positions in the left subtree of p and before all the positions in the right subtree of p 
+Application in binary trees that represent arithmetic operation.
+
+Algorithm inorder(p):
+    if p has a left child lc then:
+        inorder(lc) #recursivly traverse the left subtree of p 
+    perform the visit action for position p 
+    if p has a right child rc then:
+        inorder(rc) #recursively traverse the right subtree of p 
+
+---Binary search trees are an application of inorder travesal algo. A binary search tree for S is a binary
+tree T such that for each position p of T:
+    position p stores an element of S, denoted as e(p)
+    elements stores in the left subtree of p if any are less than e(p)
+    elements stored in the right subtree of p if any are greater than e(p)
+can also be views as descision trees 
