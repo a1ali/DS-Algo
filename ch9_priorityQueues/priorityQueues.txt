@@ -1,0 +1,8 @@
+---priority queue is a collection of prioritized elements that allows arbitrary element insertion
+and allows the removal of element that has first priortiy. When u add an element to the queue u assign 
+it a key. the element with the minimum key will be able to be removed from the queue. So an element with 1 
+key has priority over an element with 2 keys
+The p queue ADT should have a function to add a key value pair, a min function to return an item with the 
+minimum key if there are many items return an arbitrary one. a remove_min function to remove the item with 
+the min keys, an is_empty function similar to the ones we implemented before to see if queue is empty, and 
+len function to tell teh size of the queue 
