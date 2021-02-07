@@ -1,0 +1,3 @@
+Maps use an array-like syntax for indexing. This ADT is similar to pythons dict class which allows 
+for a key value pair. Maps have many different applications for example mapping domain names to ips 
+in a domain name system. Student IDs to a strudent record. 
